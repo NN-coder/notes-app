@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-styled-components",
+    "stylelint-a11y/recommended",
+    "stylelint-config-rational-order",
+    "stylelint-config-prettier"
+  ]
+}
