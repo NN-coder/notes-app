@@ -2,9 +2,6 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "jsx": "react-jsx",
     "allowJs": false,
     "alwaysStrict": true,
@@ -17,7 +14,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }
