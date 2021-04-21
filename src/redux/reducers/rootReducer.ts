@@ -1,5 +1,13 @@
 import { combineReducers } from 'redux';
-import { IAppState } from '../types';
-import { notesReducer } from './notesReducer';
+import { INotesState, notesReducer } from './notesReducer';
+import { ISearchState, searchReducer } from './searchReducer';
 
-export const rootReducer = combineReducers<IAppState>({ notes: notesReducer });
+export interface IAppState {
+  notes: INotesState;
+  search: ISearchState;
+}
+
+export const rootReducer = combineReducers<IAppState>({
+  notes: notesReducer,
+  search: searchReducer,
+});

@@ -1,41 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
+import React, { useEffect } from 'react';
+import { createSelector } from 'reselect';
 import { fetchNotes } from '../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { INotesState } from '../redux/reducers/notesReducer';
+import { IAppState } from '../redux/reducers/rootReducer';
+import { StyledHeader } from './StyledHeader';
 import { StyledMasonry } from './StyledMasonry';
 import { StyledNote } from './StyledNote';
 
-const Btn = styled.button.attrs({ type: 'button' })`
-  width: 100px;
-  height: 40px;
-  margin: 20px;
-  font-size: 20px;
-  background: gold;
-`;
+const notesSelector = createSelector<IAppState, INotesState, string, INotesState>(
+  (state) => state.notes,
+  (state) => state.search.searchText,
+  (notes, searchText) => ({
+    ...notes,
+    value: notes.value.filter((note) => note.text.includes(searchText)),
+  })
+);
 
 export const App: React.FC = () => {
-  const [columnsCount, setColumnsCount] = useState(2);
-
-  const notes = useAppSelector((state) => state.notes);
+  const notes = useAppSelector(notesSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (notes.status === 'loading' || notes.status === 'failure') {
+    if (notes.isLoading || notes.hasError) {
       dispatch(fetchNotes());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
-      <div>
-        <Btn onClick={() => setColumnsCount(columnsCount + 1)}>+Column</Btn>
-        <Btn onClick={() => setColumnsCount(columnsCount - 1)}>-Column</Btn>
-      </div>
-
-      <StyledMasonry columnsCount={columnsCount} rowGap={10} columnGap={10}>
-        {notes.status === 'success' &&
-          notes.value.map((note) => <StyledNote key={note.id} {...note} />)}
+      <StyledHeader />
+      <StyledMasonry columnsCount={2} rowGap={10} columnGap={10}>
+        {notes.value.map((note) => (
+          <StyledNote key={note.id} {...note} />
+        ))}
       </StyledMasonry>
     </>
   );

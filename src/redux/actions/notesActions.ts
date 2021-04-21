@@ -1,22 +1,46 @@
+import { batch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { fetchNotes as apiFetchNotes } from '../../api/fetchNotes';
 import { INote } from '../../api/types';
-import { createActionCreator } from './createActionCreator';
-import { IAction } from './types';
+import { createActionCreator, IAction } from './createActionCreator';
 
-type TSuccessfulNotesFetch = IAction<'SUCCESSFUL_NOTES_FETCH', INote[]>;
-type TFailedNotesFetch = IAction<'FAILED_NOTES_FETCH', Error>;
-export type TNotesActions = TSuccessfulNotesFetch | TFailedNotesFetch;
+type TSetNotesLoadingStatus = IAction<'SET_NOTES_LOADING_STATUS', boolean>;
+type TSetNotesErrorStatus = IAction<'SET_NOTES_ERROR_STATUS', boolean>;
+type TAddNotes = IAction<'ADD_NOTES', INote[]>;
+type TRemoveNotes = IAction<'REMOVE_NOTES', string[]>;
 
-export const successfulNotesFetch = createActionCreator<TSuccessfulNotesFetch>(
-  'SUCCESSFUL_NOTES_FETCH'
+export const setNotesLoadingStatus = createActionCreator<TSetNotesLoadingStatus>(
+  'SET_NOTES_LOADING_STATUS'
 );
-export const failedNotesFetch = createActionCreator<TFailedNotesFetch>('FAILED_NOTES_FETCH');
+export const setNotesErrorStatus = createActionCreator<TSetNotesErrorStatus>(
+  'SET_NOTES_ERROR_STATUS'
+);
+export const addNotes = createActionCreator<TAddNotes>('ADD_NOTES');
+export const removeNotes = createActionCreator<TRemoveNotes>('REMOVE_NOTES');
+
+export type TNotesActions =
+  | TSetNotesLoadingStatus
+  | TSetNotesErrorStatus
+  | TAddNotes
+  | TRemoveNotes;
 
 export const fetchNotes = () => {
   return (dispatch: Dispatch<TNotesActions>): void => {
+    dispatch(setNotesLoadingStatus(true));
+
     apiFetchNotes()
-      .then((notes) => dispatch(successfulNotesFetch(notes)))
-      .catch((error) => dispatch(failedNotesFetch(error as Error)));
+      .then((notes) =>
+        batch(() => {
+          dispatch(setNotesLoadingStatus(false));
+          dispatch(setNotesErrorStatus(false));
+          dispatch(addNotes(notes));
+        })
+      )
+      .catch(() =>
+        batch(() => {
+          dispatch(setNotesLoadingStatus(false));
+          dispatch(setNotesErrorStatus(true));
+        })
+      );
   };
 };

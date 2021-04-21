@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     --border-color: #5f6368;
   }
   body {
+    padding: 0 10px;
     color: var(--text-color);
     background-color: var(--bg-color);
   }
