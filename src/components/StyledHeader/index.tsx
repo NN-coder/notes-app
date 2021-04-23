@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-import { StyledSearchInput } from './StyledSearchInput';
+import styled from 'styled-components';
+import { SearchInput } from './SearchInput';
 
 export interface Props {
   className?: string;
@@ -8,10 +8,11 @@ export interface Props {
 
 const Header: React.FC<Props> = ({ className }) => (
   <header className={className}>
-    <StyledSearchInput />
+    <SearchInput />
   </header>
 );
 
 export const StyledHeader = styled(Header)`
+  margin-bottom: 5px;
   padding: 8px;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components/macro';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { MdErrorOutline } from 'react-icons/md';
+import { MdErrorOutline, MdSearch } from 'react-icons/md';
 
 const Container = styled.div`
   position: fixed;
@@ -11,7 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  font-size: 3.5rem;
+  font-size: 3rem;
   text-align: center;
   transform: translate(-50%, -50%);
 `;
@@ -19,7 +19,7 @@ const Container = styled.div`
 const Icon = styled.svg`
   width: 100px;
   height: 100px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const rotate = keyframes`
@@ -45,5 +45,12 @@ export const errorPlaceholder = (
   <Container>
     <Icon as={MdErrorOutline} />
     Something went wrong!
+  </Container>
+);
+
+export const emptyPlaceholder = (
+  <Container>
+    <Icon as={MdSearch} />
+    Nothing was found.
   </Container>
 );

@@ -1,41 +1,45 @@
-import React, { useEffect } from 'react';
-import { createSelector } from 'reselect';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { setMobileMode } from '../redux/actions/layoutActions';
 import { fetchNotes } from '../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { INotesState } from '../redux/reducers/notesReducer';
-import { IAppState } from '../redux/reducers/rootReducer';
+import { themes } from '../themes';
+import { GlobalStyle } from './GlobalStyle';
+import { Main } from './Main';
 import { StyledHeader } from './StyledHeader';
-import { StyledMasonry } from './StyledMasonry';
-import { StyledNote } from './StyledNote';
 
-const notesSelector = createSelector<IAppState, INotesState, string, INotesState>(
-  (state) => state.notes,
-  (state) => state.search.searchText,
-  (notes, searchText) => ({
-    ...notes,
-    value: notes.value.filter((note) => note.text.includes(searchText)),
-  })
-);
+const mediaQuery = window.matchMedia('(max-width: 800px)');
 
 export const App: React.FC = () => {
-  const notes = useAppSelector(notesSelector);
   const dispatch = useAppDispatch();
 
+  const isLoading = useAppSelector((state) => state.notesState.isLoading);
+  const hasError = useAppSelector((state) => state.notesState.hasError);
+
   useEffect(() => {
-    if (notes.isLoading || notes.hasError) {
+    if (isLoading || hasError) {
       dispatch(fetchNotes());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const mediaQueryEventListener = useCallback(
+    ({ matches }: MediaQueryListEvent) => dispatch(setMobileMode(matches)),
+    []
+  );
+
+  useEffect(() => {
+    mediaQuery.addEventListener('change', mediaQueryEventListener);
+    return () => mediaQuery.removeEventListener('change', mediaQueryEventListener);
+  }, []);
+
+  const theme = useAppSelector((state) => state.layoutState.theme);
+
   return (
-    <>
+    <ThemeProvider theme={themes[theme]}>
+      <GlobalStyle />
       <StyledHeader />
-      <StyledMasonry columnsCount={2} rowGap={10} columnGap={10}>
-        {notes.value.map((note) => (
-          <StyledNote key={note.id} {...note} />
-        ))}
-      </StyledMasonry>
-    </>
+      <Main />
+    </ThemeProvider>
   );
 };

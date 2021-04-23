@@ -11,13 +11,13 @@ import {
 export interface INotesState {
   isLoading: boolean;
   hasError: boolean;
-  value: INote[];
+  notes: INote[];
 }
 
 const initialState: INotesState = {
   isLoading: true,
   hasError: false,
-  value: [],
+  notes: [],
 };
 
 export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initialState, action) => {
@@ -29,10 +29,10 @@ export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initia
       return { ...state, hasError: action.payload };
 
     case addNotes.type:
-      return { ...state, value: state.value.concat(action.payload) };
+      return { ...state, notes: state.notes.concat(action.payload) };
 
     case removeNotes.type:
-      return { ...state, value: state.value.filter(({ id }) => !action.payload.includes(id)) };
+      return { ...state, notes: state.notes.filter(({ id }) => !action.payload.includes(id)) };
 
     default:
       return state;

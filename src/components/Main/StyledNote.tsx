@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { INote } from '../api/types';
+import { INote } from '../../api/types';
 
 export interface Props extends INote {
   className?: string;
@@ -11,6 +11,6 @@ const Note: React.FC<Props> = ({ text, className }) => <div className={className
 export const StyledNote = styled(Note)`
   padding: 15px;
   font-size: 1.5rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 5px;
 `;
