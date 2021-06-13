@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect } from 'react';
-import { ThemeProvider } from 'styled-components';
 import { setMobileMode } from '../redux/actions/layoutActions';
 import { fetchNotes } from '../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { themes } from '../themes';
-import { GlobalStyle } from './GlobalStyle';
 import { Main } from './Main';
-import { StyledHeader } from './StyledHeader';
+import { Header } from './Header';
+import { darkThemeClass, lightThemeClass } from '../themes.css';
 
 const mediaQuery = window.matchMedia('(max-width: 800px)');
+const rootElement = document.querySelector(':root');
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,11 +34,16 @@ export const App: React.FC = () => {
 
   const theme = useAppSelector((state) => state.layoutState.theme);
 
+  useEffect(() => {
+    const isDark = theme === 'dark';
+    rootElement?.classList.remove(isDark ? lightThemeClass : darkThemeClass);
+    rootElement?.classList.add(isDark ? darkThemeClass : lightThemeClass);
+  }, [theme]);
+
   return (
-    <ThemeProvider theme={themes[theme]}>
-      <GlobalStyle />
-      <StyledHeader />
+    <>
+      <Header />
       <Main />
-    </ThemeProvider>
+    </>
   );
 };

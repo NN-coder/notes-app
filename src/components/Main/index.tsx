@@ -4,9 +4,9 @@ import { INote } from '../../api/types';
 import { useAppSelector } from '../../redux/hooks';
 import { INotesState } from '../../redux/reducers/notesReducer';
 import { IAppState } from '../../redux/reducers/rootReducer';
-import { StyledMasonry } from '../StyledMasonry';
+import { Masonry } from '../Masonry';
 import { emptyPlaceholder, errorPlaceholder, loadingPlaceholder } from './notesStatusPlaceholders';
-import { StyledNote } from './StyledNote';
+import { Note } from './Note';
 
 const notesSelector = createSelector<IAppState, string, INote[], INote[]>(
   (state) => state.searchState.searchText,
@@ -36,11 +36,11 @@ export const Main: React.FC = () => {
 
   return (
     <main>
-      <StyledMasonry columnsCount={2} rowGap={10} columnGap={10}>
+      <Masonry columnsCount={2} rowGap={10} columnGap={10}>
         {notes.map((note) => (
-          <StyledNote key={note.id} {...note} />
+          <Note key={note.id} {...note} />
         ))}
-      </StyledMasonry>
+      </Masonry>
     </main>
   );
 };

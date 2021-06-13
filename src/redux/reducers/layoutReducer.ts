@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { TThemeName } from '../../themes/types';
+import { TThemeName } from '../../themes.css';
 import { changeTheme, setMobileMode, TLayoutActions } from '../actions/layoutActions';
 
 export interface ILayoutState {

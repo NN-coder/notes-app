@@ -18,9 +18,8 @@ export type TNotesActions =
 export const setNotesLoadingStatus = createActionCreator<TSetNotesLoadingStatus>(
   'SET_NOTES_LOADING_STATUS'
 );
-export const setNotesErrorStatus = createActionCreator<TSetNotesErrorStatus>(
-  'SET_NOTES_ERROR_STATUS'
-);
+export const setNotesErrorStatus =
+  createActionCreator<TSetNotesErrorStatus>('SET_NOTES_ERROR_STATUS');
 export const addNotes = createActionCreator<TAddNotes>('ADD_NOTES');
 export const removeNotes = createActionCreator<TRemoveNotes>('REMOVE_NOTES');
 

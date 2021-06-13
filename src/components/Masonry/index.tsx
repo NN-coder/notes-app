@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import shortid from 'shortid';
-import styled from 'styled-components';
-import { StyledMasonryColumn } from './StyledMasonryColumn';
+import { MasonryColumn } from './MasonryColumn';
 
 const formatGapValue = (gap: number | string) => (typeof gap === 'number' ? `${gap}px` : gap);
 
@@ -19,12 +18,15 @@ export interface Props {
   children: ReactNode;
   columnGap?: number | string;
   rowGap?: number | string;
-  className?: string;
 }
 
-const Masonry: React.FC<Props> = ({ columnsCount, children, className, columnGap = '0' }) => (
+export const Masonry: React.FC<Props> = ({
+  columnsCount,
+  children,
+  columnGap = '0',
+  rowGap = '0',
+}) => (
   <div
-    className={className}
     style={{
       display: 'grid',
       gridTemplateColumns: `repeat(${columnsCount}, 1fr)`,
@@ -32,15 +34,9 @@ const Masonry: React.FC<Props> = ({ columnsCount, children, className, columnGap
     }}
   >
     {createColumns(columnsCount, children).map((column, index) => (
-      <StyledMasonryColumn key={columnKeys[index] || getNewColumnKey()}>
+      <MasonryColumn key={columnKeys[index] || getNewColumnKey()} gap={formatGapValue(rowGap)}>
         {column}
-      </StyledMasonryColumn>
+      </MasonryColumn>
     ))}
   </div>
 );
-
-export const StyledMasonry = styled(Masonry)`
-  ${StyledMasonryColumn} > *:nth-child(n + 2) {
-    margin-top: ${({ rowGap = '0' }) => formatGapValue(rowGap)};
-  }
-`;

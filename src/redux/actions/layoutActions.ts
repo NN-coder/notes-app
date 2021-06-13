@@ -1,4 +1,4 @@
-import { TThemeName } from '../../themes/types';
+import { TThemeName } from '../../themes.css';
 import { createActionCreator, IAction } from './createActionCreator';
 
 type TChangeTheme = IAction<'CHANGE_THEME', TThemeName>;
