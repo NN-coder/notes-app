@@ -2,7 +2,7 @@ import { batch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { fetchNotes as apiFetchNotes } from '../../api/fetchNotes';
 import { INote } from '../../api/types';
-import { createActionCreator, IAction } from './createActionCreator';
+import { createActionCreator, IAction } from '../utils/createActionCreator';
 
 type TSetNotesLoadingStatus = IAction<'SET_NOTES_LOADING_STATUS', boolean>;
 type TSetNotesErrorStatus = IAction<'SET_NOTES_ERROR_STATUS', boolean>;

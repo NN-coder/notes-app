@@ -1,5 +1,5 @@
 import { TThemeName } from '../../themes.css';
-import { createActionCreator, IAction } from './createActionCreator';
+import { createActionCreator, IAction } from '../utils/createActionCreator';
 
 type TChangeTheme = IAction<'CHANGE_THEME', TThemeName>;
 type TSetMobileMode = IAction<'SET_MOBILE_MODE', boolean>;

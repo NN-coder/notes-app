@@ -1,12 +1,11 @@
 import React from 'react';
-import cn from 'classnames';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { MdErrorOutline, MdSearch } from 'react-icons/md';
 import { containerClass, iconClass, loadingIconClass } from './style.css';
 
 export const loadingPlaceholder = (
   <div className={containerClass}>
-    <AiOutlineLoading3Quarters className={cn(iconClass, loadingIconClass)} />
+    <AiOutlineLoading3Quarters className={loadingIconClass} />
     Loading...
   </div>
 );

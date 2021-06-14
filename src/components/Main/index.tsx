@@ -1,8 +1,7 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { INote } from '../../api/types';
-import { useAppSelector } from '../../redux/hooks';
-import { INotesState } from '../../redux/reducers/notesReducer';
+import { useAppSelector } from '../../redux/utils/hooks';
 import { IAppState } from '../../redux/reducers/rootReducer';
 import { Masonry } from '../Masonry';
 import { emptyPlaceholder, errorPlaceholder, loadingPlaceholder } from './notesStatusPlaceholders';
@@ -12,26 +11,20 @@ const notesSelector = createSelector<IAppState, string, INote[], INote[]>(
   (state) => state.searchState.searchText,
   (state) => state.notesState.notes,
   (searchText, notes) =>
-    notes.filter((note) => note.text.toLowerCase().includes(searchText.toLowerCase()))
-);
-
-const notesStatusSelector = createSelector<
-  IAppState,
-  boolean,
-  boolean,
-  Pick<INotesState, 'hasError' | 'isLoading'>
->(
-  (state) => state.notesState.isLoading,
-  (state) => state.notesState.hasError,
-  (isLoading, hasError) => ({ isLoading, hasError })
+    notes.filter(
+      ({ text, title }) =>
+        text.toLowerCase().includes(searchText.toLowerCase()) ||
+        title.toLowerCase().includes(searchText.toLowerCase())
+    )
 );
 
 export const Main: React.FC = () => {
   const notes = useAppSelector(notesSelector);
-  const notesStatus = useAppSelector(notesStatusSelector);
+  const isLoading = useAppSelector(({ notesState }) => notesState.isLoading);
+  const hasError = useAppSelector(({ notesState }) => notesState.hasError);
 
-  if (notesStatus.isLoading) return loadingPlaceholder;
-  if (notesStatus.hasError) return errorPlaceholder;
+  if (isLoading) return loadingPlaceholder;
+  if (hasError) return errorPlaceholder;
   if (notes.length === 0) return emptyPlaceholder;
 
   return (

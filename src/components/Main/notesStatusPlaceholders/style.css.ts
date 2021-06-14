@@ -1,4 +1,4 @@
-import { keyframes, style } from '@vanilla-extract/css';
+import { composeStyles, keyframes, style } from '@vanilla-extract/css';
 
 export const containerClass = style({
   position: 'fixed',
@@ -28,6 +28,7 @@ const rotate = keyframes({
   },
 });
 
-export const loadingIconClass = style({
-  animation: `0.8s ${rotate} linear infinite`,
-});
+export const loadingIconClass = composeStyles(
+  iconClass,
+  style({ animation: `0.8s ${rotate} linear infinite` })
+);

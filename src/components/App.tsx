@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { setMobileMode } from '../redux/actions/layoutActions';
 import { fetchNotes } from '../redux/actions/notesActions';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/utils/hooks';
 import { Main } from './Main';
 import { Header } from './Header';
 import { darkThemeClass, lightThemeClass } from '../themes.css';

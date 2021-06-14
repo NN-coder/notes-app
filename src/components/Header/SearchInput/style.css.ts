@@ -17,7 +17,7 @@ export const inputClass = style({
   selectors: {
     '&::placeholder': {
       opacity: '0.8',
-      color: themeVars.searchInput.controls,
+      color: themeVars.controls,
     },
   },
 });
@@ -28,5 +28,5 @@ export const clearInputBtnClass = style({
   right: '10px',
   width: '30px',
   height: '30px',
-  color: themeVars.searchInput.controls,
+  color: themeVars.controls,
 });

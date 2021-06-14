@@ -1,7 +1,7 @@
-import React, { useCallback, ChangeEvent } from 'react';
+import React, { useCallback, useRef, ChangeEvent } from 'react';
 import { MdClose } from 'react-icons/md';
 import { setSearchText } from '../../../redux/actions/searchActions';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
 import { clearInputBtnClass, inputClass, inputContainerClass } from './style.css';
 
 export const SearchInput: React.FC = () => {
@@ -10,16 +10,22 @@ export const SearchInput: React.FC = () => {
 
   const handleInputChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => dispatch(setSearchText(target.value)),
-    [dispatch]
+    []
   );
 
-  const handleClearBtnClick = useCallback(() => dispatch(setSearchText('')), [dispatch]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClearBtnClick = useCallback(() => {
+    dispatch(setSearchText(''));
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <div className={inputContainerClass}>
       <input
         className={inputClass}
-        type="text"
+        ref={inputRef}
+        type="search"
         placeholder="Search your notes"
         value={searchText}
         onChange={handleInputChange}

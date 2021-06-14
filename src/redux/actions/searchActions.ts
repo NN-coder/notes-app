@@ -1,4 +1,4 @@
-import { createActionCreator, IAction } from './createActionCreator';
+import { createActionCreator, IAction } from '../utils/createActionCreator';
 
 export type TSetSearchText = IAction<'SET_SEARCH_TEXT', string>;
 
