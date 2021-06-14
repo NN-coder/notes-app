@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { composeStyles, style } from '@vanilla-extract/css';
 import { themeVars } from '../../../themes.css';
 
 export const inputContainerClass = style({
@@ -22,11 +22,24 @@ export const inputClass = style({
   },
 });
 
-export const clearInputBtnClass = style({
+const inputBtnClass = style({
   position: 'absolute',
-  top: 'calc(50% - 15px)',
-  right: '10px',
-  width: '30px',
-  height: '30px',
+  top: 'calc(50% - 13px)',
+  width: '26px',
+  height: '26px',
   color: themeVars.controls,
 });
+
+export const clearInputBtnClass = composeStyles(
+  inputBtnClass,
+  style({
+    right: '10px',
+  })
+);
+
+export const openNavbarBtnClass = composeStyles(
+  inputBtnClass,
+  style({
+    left: '18px',
+  })
+);

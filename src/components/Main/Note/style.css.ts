@@ -13,9 +13,7 @@ export const noteClass = style({
 
 export const noteTitleClass = style({
   fontSize: '1.6rem',
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  fontWeight: '500',
+  fontWeight: 500,
   marginBottom: '6px',
 });
 

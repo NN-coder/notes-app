@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../redux/utils/hooks';
 import { Main } from './Main';
 import { Header } from './Header';
 import { darkThemeClass, lightThemeClass } from '../themes.css';
+import { NavBar } from './NavBar';
 
 const mediaQuery = window.matchMedia('(max-width: 800px)');
 const rootElement = document.querySelector(':root');
@@ -42,6 +43,7 @@ export const App: React.FC = () => {
 
   return (
     <>
+      <NavBar />
       <Header />
       <Main />
     </>

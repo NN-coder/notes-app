@@ -1,12 +1,20 @@
 import React, { useCallback, useRef, ChangeEvent } from 'react';
-import { MdClose } from 'react-icons/md';
+import { MdClose, MdMenu } from 'react-icons/md';
+import { setIsNavbarOpened } from '../../../redux/actions/layoutActions';
 import { setSearchText } from '../../../redux/actions/searchActions';
 import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
-import { clearInputBtnClass, inputClass, inputContainerClass } from './style.css';
+import {
+  clearInputBtnClass,
+  inputClass,
+  inputContainerClass,
+  openNavbarBtnClass,
+} from './style.css';
 
 export const SearchInput: React.FC = () => {
   const searchText = useAppSelector((state) => state.searchState.searchText);
   const dispatch = useAppDispatch();
+
+  const handleOpenNavbarBtnClick = useCallback(() => dispatch(setIsNavbarOpened(true)), []);
 
   const handleInputChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => dispatch(setSearchText(target.value)),
@@ -22,6 +30,9 @@ export const SearchInput: React.FC = () => {
 
   return (
     <div className={inputContainerClass}>
+      <button className={openNavbarBtnClass} type="button" onClick={handleOpenNavbarBtnClick}>
+        <MdMenu size="100%" />
+      </button>
       <input
         className={inputClass}
         ref={inputRef}
