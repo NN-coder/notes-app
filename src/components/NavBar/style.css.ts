@@ -7,7 +7,7 @@ const fixedElementClass = style({
   left: '0',
 });
 
-export const navbarBgClass = composeStyles(
+const baseNavbarBgClass = composeStyles(
   fixedElementClass,
   style({
     width: '100%',
@@ -17,15 +17,38 @@ export const navbarBgClass = composeStyles(
   })
 );
 
-export const navbarClass = composeStyles(
+const transitionDuration = '0.3s';
+
+export const navbarBgClass = {
+  opened: composeStyles(
+    baseNavbarBgClass,
+    style({ opacity: '0.5', transition: `opacity ${transitionDuration}`, visibility: 'visible' })
+  ),
+  closed: composeStyles(
+    baseNavbarBgClass,
+    style({
+      opacity: '0',
+      transition: `opacity ${transitionDuration}, visibility 0s ease ${transitionDuration}`,
+      visibility: 'hidden',
+    })
+  ),
+};
+
+const baseNavbarClass = composeStyles(
   fixedElementClass,
   style({
     height: '100%',
     width: '280px',
+    transition: `transform ${transitionDuration}`,
     backgroundColor: themeVars.bodyBgColor,
     zIndex: 3,
   })
 );
+
+export const navbarClass = {
+  opened: composeStyles(baseNavbarClass, style({ transform: 'translate(0)' })),
+  closed: composeStyles(baseNavbarClass, style({ transform: 'translate(-280px)' })),
+};
 
 export const mainAppTitleClass = style({
   fontSize: '2.2rem',
