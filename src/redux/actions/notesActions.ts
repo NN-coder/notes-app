@@ -7,13 +7,15 @@ import { createActionCreator, IAction } from '../utils/createActionCreator';
 type TSetNotesLoadingStatus = IAction<'SET_NOTES_LOADING_STATUS', boolean>;
 type TSetNotesErrorStatus = IAction<'SET_NOTES_ERROR_STATUS', boolean>;
 type TAddNotes = IAction<'ADD_NOTES', INote[]>;
-type TRemoveNotes = IAction<'REMOVE_NOTES', string[]>;
+type TMoveNotesToTrash = IAction<'MOVE_NOTES_TO_TRASH', string[]>;
+type TDeleteNotes = IAction<'DELETE_NOTES', string[]>;
 
 export type TNotesActions =
   | TSetNotesLoadingStatus
   | TSetNotesErrorStatus
   | TAddNotes
-  | TRemoveNotes;
+  | TMoveNotesToTrash
+  | TDeleteNotes;
 
 export const setNotesLoadingStatus = createActionCreator<TSetNotesLoadingStatus>(
   'SET_NOTES_LOADING_STATUS'
@@ -21,7 +23,8 @@ export const setNotesLoadingStatus = createActionCreator<TSetNotesLoadingStatus>
 export const setNotesErrorStatus =
   createActionCreator<TSetNotesErrorStatus>('SET_NOTES_ERROR_STATUS');
 export const addNotes = createActionCreator<TAddNotes>('ADD_NOTES');
-export const removeNotes = createActionCreator<TRemoveNotes>('REMOVE_NOTES');
+export const moveNotesToTrash = createActionCreator<TMoveNotesToTrash>('MOVE_NOTES_TO_TRASH');
+export const deleteNotes = createActionCreator<TDeleteNotes>('DELETE_NOTES');
 
 export const fetchNotes = () => {
   return (dispatch: Dispatch<TNotesActions>): void => {

@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect } from 'react';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import { setMobileMode } from '../redux/actions/layoutActions';
 import { fetchNotes } from '../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../redux/utils/hooks';
-import { Main } from './Main';
-import { Header } from './Header';
 import { darkThemeClass, lightThemeClass } from '../themes.css';
+import { Header } from './Header';
 import { NavBar } from './NavBar';
+import { Home } from './pages/Home';
+import { Trash } from './pages/Trash';
 
 const mediaQuery = window.matchMedia('(max-width: 800px)');
 const rootElement = document.querySelector(':root');
@@ -45,7 +47,11 @@ export const App: React.FC = () => {
     <>
       <NavBar />
       <Header />
-      <Main />
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/trash" component={Trash} />
+        <Redirect from="/" to="/home" />
+      </Switch>
     </>
   );
 };
