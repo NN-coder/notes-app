@@ -1,5 +1,6 @@
-import { composeStyles, style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { themeVars } from '../../../themes.css';
+import { openNavbarBtnClass } from '../../NavBar/OpenNavbarBtn/style.css';
 
 export const inputContainerClass = style({
   position: 'relative',
@@ -22,24 +23,16 @@ export const inputClass = style({
   },
 });
 
-const inputBtnClass = style({
-  position: 'absolute',
-  top: 'calc(50% - 13px)',
+export const clearInputBtnClass = style({
   width: '26px',
   height: '26px',
   color: themeVars.controls,
+  right: '10px',
 });
 
-export const clearInputBtnClass = composeStyles(
-  inputBtnClass,
-  style({
-    right: '10px',
-  })
-);
+globalStyle(`${inputContainerClass} button`, {
+  position: 'absolute',
+  top: 'calc(50% - 13px)',
+});
 
-export const openNavbarBtnClass = composeStyles(
-  inputBtnClass,
-  style({
-    left: '18px',
-  })
-);
+globalStyle(`${inputContainerClass} ${openNavbarBtnClass}`, { left: '18px' });

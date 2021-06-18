@@ -4,6 +4,7 @@ import { INote } from '../../api/types';
 import { useAppSelector } from '../../redux/utils/hooks';
 import { IAppState } from '../../redux/reducers/rootReducer';
 import { NotesMasonry } from '../NotesMasonry';
+import { Header } from '../Header';
 
 const notDeletedNotesSelector = createSelector<IAppState, INote[], string[], INote[]>(
   (state) => state.notesState.notes,
@@ -25,5 +26,10 @@ const notesSelector = createSelector<IAppState, INote[], string, INote[]>(
 export const Home: React.FC = () => {
   const notes = useAppSelector(notesSelector);
 
-  return <NotesMasonry notes={notes} />;
+  return (
+    <>
+      <Header />
+      <NotesMasonry notes={notes} />
+    </>
+  );
 };

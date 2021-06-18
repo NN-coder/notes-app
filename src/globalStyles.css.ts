@@ -35,3 +35,5 @@ globalStyle('button', {
   border: 'none',
   cursor: 'pointer',
 });
+
+globalStyle('a', { textDecoration: 'none' });
