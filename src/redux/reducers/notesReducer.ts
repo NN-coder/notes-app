@@ -4,6 +4,7 @@ import {
   setNotesErrorStatus,
   setNotesLoadingStatus,
   addNotes,
+  updateNote,
   moveNotesToTrash,
   deleteNotes,
   TNotesActions,
@@ -41,6 +42,21 @@ export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initia
       const notes = state.notes.filter(({ id }) => !action.payload.includes(id));
       const trash = state.trash.filter((id) => !action.payload.includes(id));
       return { ...state, notes, trash };
+    }
+
+    case updateNote.type: {
+      const notes = state.notes.slice();
+      const noteIndex = notes.findIndex(({ id }) => id === action.payload.id);
+
+      if (noteIndex === -1) return state;
+
+      const currentNote = notes[noteIndex];
+
+      (Object.keys(currentNote) as (keyof INote)[]).forEach((key) => {
+        currentNote[key] = action.payload[key] ?? currentNote[key];
+      });
+
+      return { ...state, notes };
     }
 
     default:

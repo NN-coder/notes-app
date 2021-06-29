@@ -7,8 +7,6 @@ import { mainAppTitleClass, navbarBgClass, navbarClass } from './style.css';
 
 export const NavBar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isNavbarOpened = useAppSelector(({ layoutState }) => layoutState.isNavbarOpened);
-
   const closeNavbar = useCallback(() => dispatch(setIsNavbarOpened(false)), []);
   const { pathname } = useLocation();
 
@@ -24,6 +22,8 @@ export const NavBar: React.FC = () => {
     document.addEventListener('keyup', handleEscPress);
     return () => document.removeEventListener('keyup', handleEscPress);
   }, []);
+
+  const isNavbarOpened = useAppSelector(({ layoutState }) => layoutState.isNavbarOpened);
 
   return (
     <>
