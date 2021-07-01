@@ -13,6 +13,7 @@ import {
 export interface INotesState {
   isLoading: boolean;
   hasError: boolean;
+  isPreviouslyFetched: boolean;
   notes: INote[];
   trash: string[];
 }
@@ -20,14 +21,15 @@ export interface INotesState {
 const initialState: INotesState = {
   isLoading: true,
   hasError: false,
+  isPreviouslyFetched: false,
   notes: [],
-  trash: ['LOsnh-5Hib', 'V-MGF0czW_'],
+  trash: [],
 };
 
 export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initialState, action) => {
   switch (action.type) {
     case setNotesLoadingStatus.type:
-      return { ...state, isLoading: action.payload };
+      return { ...state, isLoading: action.payload, isPreviouslyFetched: true };
 
     case setNotesErrorStatus.type:
       return { ...state, hasError: action.payload };

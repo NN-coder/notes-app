@@ -12,9 +12,12 @@ const rootElement = document.querySelector(':root');
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const isNotesPreviouslyFetched = useAppSelector(
+    ({ notesState }) => notesState.isPreviouslyFetched
+  );
 
   useEffect(() => {
-    dispatch(fetchNotes());
+    if (!isNotesPreviouslyFetched) dispatch(fetchNotes());
   }, []);
 
   const theme = useAppSelector((state) => state.layoutState.theme);
