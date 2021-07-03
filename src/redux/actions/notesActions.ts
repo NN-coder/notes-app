@@ -4,49 +4,41 @@ import { fetchNotes as apiFetchNotes } from '../../api/fetchNotes';
 import { INote } from '../../api/types';
 import { createActionCreator, IAction } from '../utils/createActionCreator';
 
-type TSetNotesLoadingStatus = IAction<'SET_NOTES_LOADING_STATUS', boolean>;
-type TSetNotesErrorStatus = IAction<'SET_NOTES_ERROR_STATUS', boolean>;
+type TSetNotesStatus = IAction<'SET_NOTES_STATUS', { isLoading?: boolean; hasError?: boolean }>;
 type TAddNotes = IAction<'ADD_NOTES', INote[]>;
 type TUpdateNote = IAction<'UPDATE_NOTE', Partial<Omit<INote, 'id'>> & Pick<INote, 'id'>>;
 type TMoveNotesToTrash = IAction<'MOVE_NOTES_TO_TRASH', string[]>;
+type TRestoreNotesFromTrash = IAction<'RESTORE_NOTES_FROM_TRASH', string[]>;
 type TDeleteNotes = IAction<'DELETE_NOTES', string[]>;
 
 export type TNotesActions =
-  | TSetNotesLoadingStatus
-  | TSetNotesErrorStatus
+  | TSetNotesStatus
   | TAddNotes
   | TUpdateNote
   | TMoveNotesToTrash
+  | TRestoreNotesFromTrash
   | TDeleteNotes;
 
+export const setNotesStatus = createActionCreator<TSetNotesStatus>('SET_NOTES_STATUS');
 export const addNotes = createActionCreator<TAddNotes>('ADD_NOTES');
 export const updateNote = createActionCreator<TUpdateNote>('UPDATE_NOTE');
 export const moveNotesToTrash = createActionCreator<TMoveNotesToTrash>('MOVE_NOTES_TO_TRASH');
 export const deleteNotes = createActionCreator<TDeleteNotes>('DELETE_NOTES');
-
-export const setNotesLoadingStatus = createActionCreator<TSetNotesLoadingStatus>(
-  'SET_NOTES_LOADING_STATUS'
+export const restoreNotesFromTrash = createActionCreator<TRestoreNotesFromTrash>(
+  'RESTORE_NOTES_FROM_TRASH'
 );
-export const setNotesErrorStatus =
-  createActionCreator<TSetNotesErrorStatus>('SET_NOTES_ERROR_STATUS');
 
 export const fetchNotes = () => {
   return (dispatch: Dispatch<TNotesActions>): void => {
-    dispatch(setNotesLoadingStatus(true));
+    dispatch(setNotesStatus({ isLoading: true }));
 
     apiFetchNotes()
       .then((notes) =>
         batch(() => {
-          dispatch(setNotesLoadingStatus(false));
-          dispatch(setNotesErrorStatus(false));
+          dispatch(setNotesStatus({ isLoading: false, hasError: false }));
           dispatch(addNotes(notes));
         })
       )
-      .catch(() =>
-        batch(() => {
-          dispatch(setNotesLoadingStatus(false));
-          dispatch(setNotesErrorStatus(true));
-        })
-      );
+      .catch(() => dispatch(setNotesStatus({ isLoading: false, hasError: true })));
   };
 };

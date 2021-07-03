@@ -1,6 +1,6 @@
 import { composeStyles, style } from '@vanilla-extract/css';
 
-export const fullscreenNoteClass = style({ padding: '0 8px' });
+export const fullscreenNoteClass = style({ padding: '70px 8px 0' });
 
 const baseClass = style({
   width: '100%',

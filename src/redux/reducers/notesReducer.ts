@@ -1,11 +1,11 @@
 import { Reducer } from 'redux';
 import { INote } from '../../api/types';
 import {
-  setNotesErrorStatus,
-  setNotesLoadingStatus,
+  setNotesStatus,
   addNotes,
   updateNote,
   moveNotesToTrash,
+  restoreNotesFromTrash,
   deleteNotes,
   TNotesActions,
 } from '../actions/notesActions';
@@ -28,17 +28,21 @@ const initialState: INotesState = {
 
 export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initialState, action) => {
   switch (action.type) {
-    case setNotesLoadingStatus.type:
-      return { ...state, isLoading: action.payload, isPreviouslyFetched: true };
-
-    case setNotesErrorStatus.type:
-      return { ...state, hasError: action.payload };
-
     case addNotes.type:
       return { ...state, notes: state.notes.concat(action.payload) };
 
     case moveNotesToTrash.type:
       return { ...state, trash: [...new Set(state.trash.concat(action.payload))] };
+
+    case restoreNotesFromTrash.type:
+      return { ...state, trash: state.trash.filter((id) => !action.payload.includes(id)) };
+
+    case setNotesStatus.type:
+      return {
+        ...state,
+        isLoading: action.payload.isLoading ?? state.isLoading,
+        hasError: action.payload.hasError ?? state.isLoading,
+      };
 
     case deleteNotes.type: {
       const notes = state.notes.filter(({ id }) => !action.payload.includes(id));

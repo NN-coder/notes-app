@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 
 import { useParams } from 'react-router-dom';
 import { updateNote } from '../../../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
+import { Buttons } from './Buttons';
 import { fullscreenNoteClass, textClass, titleClass } from './style.css';
 
 export const FullscreenNote: React.FC = () => {
@@ -30,6 +31,7 @@ export const FullscreenNote: React.FC = () => {
 
   return (
     <div className={fullscreenNoteClass}>
+      <Buttons />
       <div className={titleClass} ref={titleRef} contentEditable suppressContentEditableWarning>
         {currentNote?.title}
       </div>

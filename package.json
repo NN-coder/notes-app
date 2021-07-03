@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=development webpack serve -c config/webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack -c config/webpack.config.js",
     "eslint:fix": "eslint src --fix",
-    "deploy": "yarn 'eslint fix' && yarn build && gh-pages -d build"
+    "deploy": "yarn eslint:fix && yarn build && gh-pages -d build"
   },
   "dependencies": {
     "@vanilla-extract/css": "^1.1.0",
