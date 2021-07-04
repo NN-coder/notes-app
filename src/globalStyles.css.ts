@@ -14,10 +14,6 @@ globalStyle('*', {
   },
 });
 
-globalStyle('*::-webkit-search-cancel-button', {
-  display: 'none',
-});
-
 globalStyle(':root', {
   fontSize: '10px',
   fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,

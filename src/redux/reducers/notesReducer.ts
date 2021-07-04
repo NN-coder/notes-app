@@ -40,6 +40,7 @@ export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initia
     case setNotesStatus.type:
       return {
         ...state,
+        isPreviouslyFetched: true,
         isLoading: action.payload.isLoading ?? state.isLoading,
         hasError: action.payload.hasError ?? state.isLoading,
       };
@@ -59,7 +60,9 @@ export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initia
       const currentNote = notes[noteIndex];
 
       (Object.keys(currentNote) as (keyof INote)[]).forEach((key) => {
-        currentNote[key] = action.payload[key] ?? currentNote[key];
+        // Check is required for correct typing
+        if (key === 'color') currentNote.color = action.payload.color ?? currentNote.color;
+        else currentNote[key] = action.payload[key] ?? currentNote[key];
       });
 
       return { ...state, notes };

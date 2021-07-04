@@ -27,6 +27,7 @@ export const Buttons: React.FC = () => {
       </button>
       <button
         className={isNoteInTrash ? btnClass : trashBtnClass}
+        title={isNoteInTrash ? 'Restore' : 'Delete'}
         type="button"
         onClick={handleTrashBtnClick}
       >

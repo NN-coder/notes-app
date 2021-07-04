@@ -29,7 +29,7 @@ export const NavBar: React.FC = () => {
     <>
       <div className={isNavbarOpened ? navbarClass.opened : navbarClass.closed}>
         <h1 className={mainAppTitleClass}>Notes app</h1>
-        <Nav />
+        <Nav closeNavbar={closeNavbar} />
       </div>
       <div
         className={isNavbarOpened ? navbarBgClass.opened : navbarBgClass.closed}

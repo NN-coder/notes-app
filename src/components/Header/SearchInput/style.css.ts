@@ -20,6 +20,9 @@ export const inputClass = style({
       opacity: '0.8',
       color: themeVars.controls,
     },
+    '&::-webkit-search-cancel-button': {
+      display: 'none',
+    },
   },
 });
 
