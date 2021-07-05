@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 
 import { useParams } from 'react-router-dom';
 import { updateNote } from '../../../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
-import { Buttons } from './Buttons';
-import { fullscreenNoteClass, textClass, titleClass } from './style.css';
+import { themeVars } from '../../../themes.css';
+import { DeleteAndRestoreBtn } from './buttons/DeleteAndRestoreBtn';
+import { GoBackBtn } from './buttons/GoBackBtn';
+import { btnContainerClass, fullscreenNoteClass, textClass, titleClass } from './style.css';
 
 export const FullscreenNote: React.FC = () => {
   const notes = useAppSelector(({ notesState }) => notesState.notes);
@@ -29,14 +31,32 @@ export const FullscreenNote: React.FC = () => {
     return () => window.removeEventListener('unload', saveNote);
   }, [saveNote]);
 
+  useLayoutEffect(() => {
+    if (currentNote) {
+      document.body.style.backgroundColor =
+        currentNote.color === 'default'
+          ? themeVars.bodyBgColor
+          : themeVars.noteColors[currentNote.color];
+    }
+
+    return () => {
+      document.body.style.backgroundColor = themeVars.bodyBgColor;
+    };
+  }, []);
+
+  if (!currentNote) return null;
+
   return (
     <div className={fullscreenNoteClass}>
-      <Buttons />
+      <div className={btnContainerClass}>
+        <GoBackBtn />
+        <DeleteAndRestoreBtn />
+      </div>
       <div className={titleClass} ref={titleRef} contentEditable suppressContentEditableWarning>
-        {currentNote?.title}
+        {currentNote.title}
       </div>
       <div className={textClass} ref={textRef} contentEditable suppressContentEditableWarning>
-        {currentNote?.text}
+        {currentNote.text}
       </div>
     </div>
   );
