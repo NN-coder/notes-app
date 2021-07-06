@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage/session';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import { rootReducer } from './reducers/rootReducer';
 
