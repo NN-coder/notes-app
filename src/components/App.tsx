@@ -3,7 +3,6 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 import { fetchNotes } from '../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../redux/utils/hooks';
 import { darkThemeClass, lightThemeClass } from '../themes.css';
-import { CreateNoteBtn } from './CreateNoteBtn';
 import { NavBar } from './NavBar';
 import { FullscreenNote } from './pages/FullscreenNote';
 import { Home } from './pages/Home';
@@ -38,7 +37,6 @@ export const App: React.FC = () => {
         <Route path="/:id" component={FullscreenNote} />
         <Redirect from="/" to="/home" />
       </Switch>
-      <CreateNoteBtn />
     </>
   );
 };

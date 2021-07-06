@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import shortid from 'shortid';
-import { addNotes } from '../../redux/actions/notesActions';
-import { useAppDispatch } from '../../redux/utils/hooks';
+import { addNotes } from '../../../../redux/actions/notesActions';
+import { useAppDispatch } from '../../../../redux/utils/hooks';
 import { createNoteBtnClass } from './style.css';
 
 export const CreateNoteBtn: React.FC = () => {

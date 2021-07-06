@@ -1,10 +1,11 @@
 import React from 'react';
 import { createSelector } from 'reselect';
-import { INote } from '../../api/types';
-import { useAppSelector } from '../../redux/utils/hooks';
-import { IAppState } from '../../redux/reducers/rootReducer';
-import { NotesMasonry } from '../NotesMasonry';
-import { Header } from '../Header';
+import { INote } from '../../../api/types';
+import { useAppSelector } from '../../../redux/utils/hooks';
+import { IAppState } from '../../../redux/reducers/rootReducer';
+import { NotesMasonry } from '../../NotesMasonry';
+import { Header } from '../../Header';
+import { CreateNoteBtn } from './CreateNoteBtn';
 
 const notDeletedNotesSelector = createSelector<IAppState, INote[], string[], INote[]>(
   (state) => state.notesState.notes,
@@ -30,6 +31,7 @@ export const Home: React.FC = () => {
     <>
       <Header />
       <NotesMasonry notes={notes} />
+      <CreateNoteBtn />
     </>
   );
 };

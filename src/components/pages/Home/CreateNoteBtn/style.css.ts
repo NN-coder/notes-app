@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { themeVars } from '../../themes.css';
+import { themeVars } from '../../../../themes.css';
 
 export const createNoteBtnClass = style({
   position: 'fixed',

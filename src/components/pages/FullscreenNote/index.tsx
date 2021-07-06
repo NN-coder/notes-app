@@ -3,10 +3,9 @@ import { useParams } from 'react-router-dom';
 import { updateNote } from '../../../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
 import { themeVars } from '../../../themes.css';
-import { DeleteAndRestoreBtn } from './buttons/DeleteAndRestoreBtn';
-import { GoBackBtn } from './buttons/GoBackBtn';
+import { Buttons } from './Buttons';
 import { ContentEditableInput } from './ContentEditableInput';
-import { btnContainerClass, fullscreenNoteClass, textClass, titleClass } from './style.css';
+import { fullscreenNoteClass, textClass, titleClass } from './style.css';
 
 type TSelectionState = { node: Node | null; offset: number };
 
@@ -58,10 +57,7 @@ export const FullscreenNote: React.FC = () => {
 
   return (
     <div className={fullscreenNoteClass}>
-      <div className={btnContainerClass}>
-        <GoBackBtn />
-        <DeleteAndRestoreBtn />
-      </div>
+      <Buttons />
       <ContentEditableInput
         value={currentNote.title}
         className={titleClass}
