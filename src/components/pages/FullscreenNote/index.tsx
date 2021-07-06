@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
 import { themeVars } from '../../../themes.css';
 import { DeleteAndRestoreBtn } from './buttons/DeleteAndRestoreBtn';
 import { GoBackBtn } from './buttons/GoBackBtn';
+import { ContentEditableInput } from './ContentEditableInput';
 import { btnContainerClass, fullscreenNoteClass, textClass, titleClass } from './style.css';
 
 type TSelectionState = { node: Node | null; offset: number };
@@ -61,28 +62,24 @@ export const FullscreenNote: React.FC = () => {
         <GoBackBtn />
         <DeleteAndRestoreBtn />
       </div>
-      <div
+      <ContentEditableInput
+        value={currentNote.title}
         className={titleClass}
-        contentEditable
-        suppressContentEditableWarning
-        onInput={({ target }) => {
+        placeholder="Title"
+        handleInput={({ target }) => {
           saveSelection();
           dispatch(updateNote({ id, title: (target as HTMLDivElement).innerText }));
         }}
-      >
-        {currentNote.title}
-      </div>
-      <div
+      />
+      <ContentEditableInput
+        value={currentNote.text}
         className={textClass}
-        contentEditable
-        suppressContentEditableWarning
-        onInput={({ target }) => {
+        placeholder="Note"
+        handleInput={({ target }) => {
           saveSelection();
           dispatch(updateNote({ id, text: (target as HTMLDivElement).innerText }));
         }}
-      >
-        {currentNote.text}
-      </div>
+      />
     </div>
   );
 };
