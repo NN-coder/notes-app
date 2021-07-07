@@ -6,10 +6,13 @@ import { createActionCreator, IAction } from '../utils/createActionCreator';
 
 type TSetNotesStatus = IAction<'SET_NOTES_STATUS', { isLoading?: boolean; hasError?: boolean }>;
 type TAddNotes = IAction<'ADD_NOTES', INote[]>;
-type TUpdateNote = IAction<'UPDATE_NOTE', Partial<Omit<INote, 'id'>> & Pick<INote, 'id'>>;
 type TMoveNotesToTrash = IAction<'MOVE_NOTES_TO_TRASH', string[]>;
 type TRestoreNotesFromTrash = IAction<'RESTORE_NOTES_FROM_TRASH', string[]>;
 type TDeleteNotes = IAction<'DELETE_NOTES', string[]>;
+type TUpdateNote = IAction<
+  'UPDATE_NOTE',
+  Partial<Omit<INote, 'id' | 'edited'>> & Pick<INote, 'id'>
+>;
 
 export type TNotesActions =
   | TSetNotesStatus

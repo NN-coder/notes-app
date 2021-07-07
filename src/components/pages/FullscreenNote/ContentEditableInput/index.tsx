@@ -13,19 +13,26 @@ export const ContentEditableInput: React.FC<Props> = ({
   value,
   handleInput,
   placeholder,
-}) => (
-  <div className={`${containerClass} ${className}`}>
-    {!!placeholder && ['', '\n'].includes(value) && (
-      <div className={placeholderClass}>{placeholder}</div>
-    )}
-    <div
-      contentEditable
-      suppressContentEditableWarning
-      role="textbox"
-      className={inputClass}
-      onInput={handleInput}
-    >
-      {value}
+}) => {
+  const isPlaceholderNeeded = !!placeholder && ['', '\n'].includes(value);
+
+  return (
+    <div className={`${containerClass} ${className}`}>
+      {isPlaceholderNeeded && (
+        <div className={placeholderClass} aria-hidden>
+          {placeholder}
+        </div>
+      )}
+      <div
+        contentEditable
+        suppressContentEditableWarning
+        role="textbox"
+        className={inputClass}
+        onInput={handleInput}
+        {...(isPlaceholderNeeded && { 'aria-label': placeholder })}
+      >
+        {value}
+      </div>
     </div>
-  </div>
-);
+  );
+};

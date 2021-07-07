@@ -12,7 +12,7 @@ export const CreateNoteBtn: React.FC = () => {
 
   const handleClick = useCallback(() => {
     const id = shortid.generate();
-    dispatch(addNotes([{ id, title: '', text: '', color: 'default' }]));
+    dispatch(addNotes([{ id, title: '', text: '', color: 'default', edited: Date.now() }]));
     push(`/${id}`);
   }, []);
 

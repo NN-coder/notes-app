@@ -57,13 +57,12 @@ export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initia
 
       if (noteIndex === -1) return state;
 
-      const currentNote = notes[noteIndex];
-
-      (Object.keys(currentNote) as (keyof INote)[]).forEach((key) => {
-        // Check is required for correct typing
-        if (key === 'color') currentNote.color = action.payload.color ?? currentNote.color;
-        else currentNote[key] = action.payload[key] ?? currentNote[key];
+      const updateObj = { ...action.payload, edited: Date.now() };
+      (Object.keys(updateObj) as (keyof INote)[]).forEach((key) => {
+        if (updateObj[key] === undefined) delete updateObj[key];
       });
+
+      notes[noteIndex] = { ...notes[noteIndex], ...updateObj };
 
       return { ...state, notes };
     }

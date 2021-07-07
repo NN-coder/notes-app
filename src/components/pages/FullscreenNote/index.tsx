@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
 import { themeVars } from '../../../themes.css';
 import { Buttons } from './Buttons';
 import { ContentEditableInput } from './ContentEditableInput';
+import { DateOfChange } from './DateOfChange';
 import { fullscreenNoteClass, textClass, titleClass } from './style.css';
 
 type TSelectionState = { node: Node | null; offset: number };
@@ -76,6 +77,7 @@ export const FullscreenNote: React.FC = () => {
           dispatch(updateNote({ id, text: (target as HTMLDivElement).innerText }));
         }}
       />
+      <DateOfChange dateOfChange={new Date(currentNote.edited)} />
     </div>
   );
 };

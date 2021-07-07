@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { MdArrowBack, MdRestore } from 'react-icons/md';
-import { BsTrash } from 'react-icons/bs';
+import { MdArrowBack, MdRestore, MdDelete, MdDeleteForever } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../../../redux/utils/hooks';
 import {
   deleteNotes,
@@ -12,8 +11,6 @@ import { btnClass, btnContainerClass } from './style.css';
 
 export const Buttons: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const trash = useAppSelector(({ notesState }) => notesState.trash);
-  const isNoteInTrash = useMemo(() => trash.includes(id), [trash, id]);
 
   const { goBack } = useHistory();
   const dispatch = useAppDispatch();
@@ -23,10 +20,13 @@ export const Buttons: React.FC = () => {
     dispatch(restoreNotesFromTrash([id]));
   }, [id]);
 
+  const trash = useAppSelector(({ notesState }) => notesState.trash);
+  const isNoteInTrash = useMemo(() => trash.includes(id), [id]);
+
   const handleDeleteBtnClick = useCallback(() => {
     goBack();
     dispatch(isNoteInTrash ? deleteNotes([id]) : moveNotesToTrash([id]));
-  }, [isNoteInTrash, id]);
+  }, [id]);
 
   return (
     <div className={btnContainerClass}>
@@ -51,9 +51,8 @@ export const Buttons: React.FC = () => {
         type="button"
         onClick={handleDeleteBtnClick}
         title={isNoteInTrash ? 'Delete forever' : 'Move to trash'}
-        style={{ width: '23px', height: '23px' }}
       >
-        <BsTrash size="100%" />
+        {isNoteInTrash ? <MdDeleteForever size="100%" /> : <MdDelete size="100%" />}
       </button>
     </div>
   );
