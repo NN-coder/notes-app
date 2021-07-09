@@ -14,7 +14,7 @@ export const ContentEditableInput: React.FC<Props> = ({
   handleInput,
   placeholder,
 }) => {
-  const isPlaceholderNeeded = !!placeholder && ['', '\n'].includes(value);
+  const isPlaceholderNeeded = !!placeholder && ['', '\n', '\r', '\r\n'].includes(value);
 
   return (
     <div className={`${containerClass} ${className}`}>
