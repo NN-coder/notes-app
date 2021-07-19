@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
+import { IconContext } from 'react-icons/lib';
 import { App } from './components/App';
 import { store, persistor } from './redux/store';
 import { setMobileMode } from './redux/actions/layoutActions';
@@ -18,7 +19,9 @@ render(
     <HashRouter>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <App />
+          <IconContext.Provider value={{ size: '100%' }}>
+            <App />
+          </IconContext.Provider>
         </PersistGate>
       </Provider>
     </HashRouter>

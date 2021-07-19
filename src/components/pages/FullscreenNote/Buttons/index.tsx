@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { MdArrowBack, MdRestore, MdDelete, MdDeleteForever } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../../../../redux/utils/hooks';
+import { useAppDispatch } from '../../../../redux/utils/hooks';
 import {
   deleteNotes,
   moveNotesToTrash,
@@ -9,24 +9,25 @@ import {
 } from '../../../../redux/actions/notesActions';
 import { btnClass, btnContainerClass } from './style.css';
 
-export const Buttons: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+export interface Props {
+  noteId: string;
+  isNoteInTrash: boolean;
+}
 
-  const { goBack } = useHistory();
+export const Buttons: React.FC<Props> = ({ noteId, isNoteInTrash }) => {
   const dispatch = useAppDispatch();
 
   const handleRestoreBtnClick = useCallback(() => {
-    goBack();
-    dispatch(restoreNotesFromTrash([id]));
-  }, [id]);
+    dispatch(restoreNotesFromTrash([noteId]));
+  }, [noteId]);
 
-  const trash = useAppSelector(({ notesState }) => notesState.trash);
-  const isNoteInTrash = useMemo(() => trash.includes(id), [id]);
+  const { push } = useHistory();
+  const goBack = useCallback(() => push(isNoteInTrash ? '/trash' : '/home'), [isNoteInTrash]);
 
   const handleDeleteBtnClick = useCallback(() => {
     goBack();
-    dispatch(isNoteInTrash ? deleteNotes([id]) : moveNotesToTrash([id]));
-  }, [id]);
+    dispatch(isNoteInTrash ? deleteNotes([noteId]) : moveNotesToTrash([noteId]));
+  }, [goBack, isNoteInTrash, noteId]);
 
   return (
     <div className={btnContainerClass}>
@@ -37,12 +38,12 @@ export const Buttons: React.FC = () => {
         title="Go back"
         style={{ marginRight: 'auto' }}
       >
-        <MdArrowBack size="100%" />
+        <MdArrowBack />
       </button>
 
       {isNoteInTrash && (
         <button className={btnClass} type="button" onClick={handleRestoreBtnClick} title="Restore">
-          <MdRestore size="100%" />
+          <MdRestore />
         </button>
       )}
 
@@ -52,7 +53,7 @@ export const Buttons: React.FC = () => {
         onClick={handleDeleteBtnClick}
         title={isNoteInTrash ? 'Delete forever' : 'Move to trash'}
       >
-        {isNoteInTrash ? <MdDeleteForever size="100%" /> : <MdDelete size="100%" />}
+        {isNoteInTrash ? <MdDeleteForever /> : <MdDelete />}
       </button>
     </div>
   );

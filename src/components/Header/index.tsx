@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
         />
         {searchText.length > 0 && (
           <button className={clearInputBtnClass} type="button" onClick={handleClearBtnClick}>
-            <MdClose size="100%" />
+            <MdClose />
           </button>
         )}
       </div>

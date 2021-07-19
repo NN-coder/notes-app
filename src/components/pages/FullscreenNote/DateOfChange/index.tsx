@@ -12,15 +12,18 @@ const formatDateOfChange = (dateOfChange: Date) => {
     });
   }
 
-  if (
-    currentDate.getMonth() === dateOfChange.getMonth() &&
-    currentDate.getDate() === dateOfChange.getDate()
-  ) {
-    return dateOfChange.toLocaleString('en', {
+  if (currentDate.getMonth() === dateOfChange.getMonth()) {
+    const changedToday = currentDate.getDate() - dateOfChange.getDate() === 0;
+    const changedYesterday = currentDate.getDate() - dateOfChange.getDate() === 1;
+
+    const formattedDate = dateOfChange.toLocaleString('en', {
       hour12: false,
       hour: '2-digit',
       minute: '2-digit',
     });
+
+    if (changedYesterday) return `Yesterday, ${formattedDate}`;
+    if (changedToday) return formattedDate;
   }
 
   return dateOfChange.toLocaleString('en', {

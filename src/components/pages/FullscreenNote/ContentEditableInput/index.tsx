@@ -5,6 +5,7 @@ export interface Props {
   value: string;
   handleInput: (event: React.FormEvent<HTMLDivElement>) => void;
   placeholder?: string;
+  disabled?: boolean;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ export const ContentEditableInput: React.FC<Props> = ({
   value,
   handleInput,
   placeholder,
+  disabled,
 }) => {
   const isPlaceholderNeeded = !!placeholder && ['', '\n', '\r', '\r\n'].includes(value);
 
@@ -24,7 +26,7 @@ export const ContentEditableInput: React.FC<Props> = ({
         </div>
       )}
       <div
-        contentEditable
+        contentEditable={!disabled}
         suppressContentEditableWarning
         role="textbox"
         className={inputClass}

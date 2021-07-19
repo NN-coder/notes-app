@@ -8,6 +8,6 @@ const handleClick = () => store.dispatch(setIsNavbarOpened(true));
 
 export const OpenNavbarBtn: React.FC = () => (
   <button className={openNavbarBtnClass} type="button" onClick={handleClick}>
-    <MdMenu size="100%" />
+    <MdMenu />
   </button>
 );

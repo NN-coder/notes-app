@@ -8,8 +8,6 @@ import { ContentEditableInput } from './ContentEditableInput';
 import { DateOfChange } from './DateOfChange';
 import { fullscreenNoteClass, textClass, titleClass } from './style.css';
 
-type TSelectionState = { node: Node | null; offset: number };
-
 export const FullscreenNote: React.FC = () => {
   const notes = useAppSelector(({ notesState }) => notesState.notes);
   const { id } = useParams<{ id: string }>();
@@ -28,6 +26,7 @@ export const FullscreenNote: React.FC = () => {
     };
   }, []);
 
+  type TSelectionState = { node: Node | null; offset: number };
   const [selection, setSelection] = useState<TSelectionState>({ node: null, offset: 0 });
 
   const saveSelection = useCallback(() => {
@@ -53,13 +52,16 @@ export const FullscreenNote: React.FC = () => {
   });
 
   const dispatch = useAppDispatch();
+  const trash = useAppSelector(({ notesState }) => notesState.trash);
+  const isNoteInTrash = trash.includes(id);
 
   if (!currentNote) return null;
 
   return (
     <div className={fullscreenNoteClass}>
-      <Buttons />
+      <Buttons noteId={id} isNoteInTrash={isNoteInTrash} />
       <ContentEditableInput
+        disabled={isNoteInTrash}
         value={currentNote.title}
         className={titleClass}
         placeholder="Title"
@@ -69,6 +71,7 @@ export const FullscreenNote: React.FC = () => {
         }}
       />
       <ContentEditableInput
+        disabled={isNoteInTrash}
         value={currentNote.text}
         className={textClass}
         placeholder="Note"
