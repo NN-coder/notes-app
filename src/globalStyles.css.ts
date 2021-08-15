@@ -21,7 +21,7 @@ globalStyle(':root', {
 });
 
 globalStyle('body', {
-  padding: '0 10px',
+  padding: '0 10px 60px',
   color: themeVars.textColor,
   backgroundColor: themeVars.bodyBgColor,
 });
