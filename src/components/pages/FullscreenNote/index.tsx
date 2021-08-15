@@ -1,30 +1,17 @@
-import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { updateNote } from '../../../redux/actions/notesActions';
 import { useAppDispatch, useAppSelector } from '../../../redux/utils/hooks';
-import { themeVars } from '../../../themes.css';
 import { Buttons } from './Buttons';
 import { ContentEditableInput } from './ContentEditableInput';
 import { DateOfChange } from './DateOfChange';
 import { fullscreenNoteClass, textClass, titleClass } from './style.css';
 
 export const FullscreenNote: React.FC = () => {
-  const notes = useAppSelector(({ notesState }) => notesState.notes);
   const { id } = useParams<{ id: string }>();
-  const currentNote = useMemo(() => notes.find((note) => note.id === id), [notes, id]);
-
-  useLayoutEffect(() => {
-    if (currentNote) {
-      document.body.style.backgroundColor =
-        currentNote.color === 'default'
-          ? themeVars.bodyBgColor
-          : themeVars.noteColors[currentNote.color];
-    }
-
-    return () => {
-      document.body.style.backgroundColor = themeVars.bodyBgColor;
-    };
-  }, []);
+  const currentNote = useAppSelector(({ notesState }) =>
+    notesState.notes.find((note) => note.id === id)
+  );
 
   type TSelectionState = { node: Node | null; offset: number };
   const [selection, setSelection] = useState<TSelectionState>({ node: null, offset: 0 });
@@ -52,8 +39,7 @@ export const FullscreenNote: React.FC = () => {
   });
 
   const dispatch = useAppDispatch();
-  const trash = useAppSelector(({ notesState }) => notesState.trash);
-  const isNoteInTrash = trash.includes(id);
+  const isNoteInTrash = useAppSelector(({ notesState }) => notesState.trash.includes(id));
 
   if (!currentNote) return null;
 
@@ -80,7 +66,7 @@ export const FullscreenNote: React.FC = () => {
           dispatch(updateNote({ id, text: (target as HTMLDivElement).innerText }));
         }}
       />
-      <DateOfChange dateOfChange={new Date(currentNote.edited)} />
+      <DateOfChange dateOfChange={new Date(currentNote.editedTimestamp)} />
     </div>
   );
 };

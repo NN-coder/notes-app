@@ -57,13 +57,12 @@ export const notesReducer: Reducer<INotesState, TNotesActions> = (state = initia
 
       if (noteIndex === -1) return state;
 
-      const updateObj = { ...action.payload, edited: Date.now() };
+      const updateObj = { ...action.payload, editedTimestamp: Date.now() };
       (Object.keys(updateObj) as (keyof INote)[]).forEach((key) => {
         if (updateObj[key] === undefined) delete updateObj[key];
       });
 
       notes[noteIndex] = { ...notes[noteIndex], ...updateObj };
-
       return { ...state, notes };
     }
 

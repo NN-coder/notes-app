@@ -11,7 +11,7 @@ type TRestoreNotesFromTrash = IAction<'RESTORE_NOTES_FROM_TRASH', string[]>;
 type TDeleteNotes = IAction<'DELETE_NOTES', string[]>;
 type TUpdateNote = IAction<
   'UPDATE_NOTE',
-  Partial<Omit<INote, 'id' | 'edited'>> & Pick<INote, 'id'>
+  Partial<Omit<INote, 'id' | 'editedTimestamp'>> & Pick<INote, 'id'>
 >;
 
 export type TNotesActions =

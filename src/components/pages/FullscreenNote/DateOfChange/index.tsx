@@ -36,6 +36,6 @@ export interface Props {
   dateOfChange: Date;
 }
 
-export const DateOfChange: React.FC<Props> = ({ dateOfChange }) => (
+export const DateOfChange: React.FC<Props> = React.memo(({ dateOfChange }) => (
   <div className={dateOfChangeClass}>Edited {formatDateOfChange(dateOfChange)}</div>
-);
+));

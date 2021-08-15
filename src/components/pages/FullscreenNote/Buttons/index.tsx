@@ -14,7 +14,7 @@ export interface Props {
   isNoteInTrash: boolean;
 }
 
-export const Buttons: React.FC<Props> = ({ noteId, isNoteInTrash }) => {
+export const Buttons: React.FC<Props> = React.memo(({ noteId, isNoteInTrash }) => {
   const dispatch = useAppDispatch();
 
   const handleRestoreBtnClick = useCallback(() => {
@@ -57,4 +57,4 @@ export const Buttons: React.FC<Props> = ({ noteId, isNoteInTrash }) => {
       </button>
     </div>
   );
-};
+});

@@ -8,7 +8,7 @@ export interface Props {
   closeNavbar: () => void;
 }
 
-export const Nav: React.FC<Props> = ({ closeNavbar }) => (
+export const Nav: React.FC<Props> = React.memo(({ closeNavbar }) => (
   <nav className={navCLass}>
     <ul>
       <li>
@@ -35,4 +35,4 @@ export const Nav: React.FC<Props> = ({ closeNavbar }) => (
       </li>
     </ul>
   </nav>
-);
+));
